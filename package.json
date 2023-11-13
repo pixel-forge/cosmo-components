@@ -1,6 +1,6 @@
 {
   "name": "@pixel-forge/cosmo-components",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -27,7 +27,8 @@
     "@types/react": "^18.2.20",
     "react": "^18.2.0",
     "typescript": "^5.1.6",
-    "@pixel-forge/cosmo-utils": "^1.0.6",
-    "@pixel-forge/cosmo-styles": "^1.0.3"
+    "@pixel-forge/cosmo-utils": "^1.0.0",
+    "@pixel-forge/cosmo-styles": "^1.0.0",
+    "@pixel-forge/cosmo-icons": "^1.0.0"
   }
 }

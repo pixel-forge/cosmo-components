@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Cosmo_SyncComponent} from '../base/Cosmo_SyncComponent';
+import {Cosmo_SyncComponent} from '../../base/Cosmo_SyncComponent';
 import { _className } from '@pixel-forge/cosmo-utils';
 
 type Props_Base = {
