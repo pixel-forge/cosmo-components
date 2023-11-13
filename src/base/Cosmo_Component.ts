@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {_keys, Cosmo_Logger, Cosmo_LogParam, sortArray} from '@pixel-forge/cosmo-utils';
-import {Cosmo_LogLevel} from '@pixel-forge/cosmo-utils/dist/logging/Cosmo_Logger/types';
+import {_keys, Cosmo_Logger, Cosmo_LogLevel, Cosmo_LogParam, sortArray} from '@pixel-forge/cosmo-utils';
 
 let componentInstances: number = 0;
 
@@ -11,6 +10,7 @@ export abstract class Cosmo_Component<Props = {}, State = {}>
 
 	private logger: Cosmo_Logger;
 	private minLogLevel: Cosmo_LogLevel = Cosmo_LogLevel.Info;
+	protected mounted: boolean = false;
 
 	// ################## Class Init ##################
 
@@ -20,6 +20,14 @@ export abstract class Cosmo_Component<Props = {}, State = {}>
 		this.logger = new Cosmo_Logger(tag);
 		this.logger.setMinLevel(this.minLogLevel);
 		this._deriveStateFromProps.bind(this);
+		this.state = this._deriveStateFromProps(props,{})
+
+		//Rewrite componentDidMount
+		const __componentDidMount = this.componentDidMount?.bind(this);
+		this.componentDidMount = () => {
+			this.mounted = true;
+			__componentDidMount?.();
+		};
 	}
 
 	// ################## Class Life Cycle ##################
@@ -74,6 +82,12 @@ export abstract class Cosmo_Component<Props = {}, State = {}>
 			return true
 
 		return false;
+	}
+
+	// ################## Class Methods ##################
+
+	protected setLoggerMinLevel = (logLevel: Cosmo_LogLevel) => {
+		this.logger.setMinLevel(logLevel);
 	}
 
 	// ################## Class Methods - Logging ##################
