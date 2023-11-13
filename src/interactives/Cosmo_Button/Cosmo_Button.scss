@@ -1,0 +1,72 @@
+@use "@pixel-forge/cosmo-styles" as styles;
+///Cosmo_Button expects these css-vars to function:
+/// --cosmo-button-foreground : color of the text and the border
+/// --cosmo-button-background : color of the background
+/// --cosmo-button-background__hover : color of the background when hovering
+/// --cosmo-button-background__action : color of the background when clicking
+
+.cosmo-button {
+  @include styles.mouse-interactive-background(
+                  var(--cosmo-button-background),
+                  var(--cosmo-button-background__hover),
+                  var(--cosmo-button-background__action)
+  );
+
+  width: 100px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--cosmo-button-foreground);
+
+  .cosmo-button__loader {
+    height: 90%;
+    aspect-ratio: 1/1;
+
+    border: 5px solid var(--cosmo-button-foreground);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+
+    display: inline-block;
+    box-sizing: border-box;
+    animation: CosmoButtonLoader 1s linear infinite;
+  }
+
+  &[data-disabled="true"] {
+    //Force background to stay a single color
+    background: var(--cosmo-button-background) !important;
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  &[data-variant="normal"] {
+    --cosmo-button-foreground: #1D1F20;
+    --cosmo-button-background: #FDFDFF;
+    --cosmo-button-background__hover: #CCCDCF;
+    --cosmo-button-background__action: #9B9D9F;
+  }
+
+  &[data-variant="cancel"] {
+    --cosmo-button-foreground: #1F305E;
+    --cosmo-button-background: #FDFDFF;
+    --cosmo-button-background__hover: #818BA5;
+    --cosmo-button-background__action: #6C7896;
+  }
+
+  &[data-variant="submit"] {
+    --cosmo-button-foreground: #FDFDFF;
+    --cosmo-button-background: #1F305E;
+    --cosmo-button-background__hover: #1F2F5C;
+    --cosmo-button-background__action: #19274D;
+  }
+}
+
+@keyframes CosmoButtonLoader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

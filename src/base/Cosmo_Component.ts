@@ -27,6 +27,17 @@ export abstract class Cosmo_Component<Props = {}, State = {}>
 	//Inheriting classes will have to implement this wrapper function for deriveStateFromProps
 	protected abstract _deriveStateFromProps(nextProps: Props, state: Partial<State>): State;
 
+	UNSAFE_componentWillReceiveProps(nextProps: Readonly<Props>, nextContext: any) {
+		//If props haven't changed, abort
+		if(!this.shouldReDeriveState(nextProps))
+			return;
+		
+		//Calculate new state and set it
+		const currentState = this.state ? {...this.state} : {} as State;
+		const state = this._deriveStateFromProps(nextProps,currentState);
+		this.setState(state);
+	}
+
 	//A better version for comparing the current state with the next state
 	shouldComponentUpdate(nextProps: Readonly<Props>, nextState: Readonly<State>, nextContext: any): boolean {
 		const currentStateKeys = sortArray(_keys(this.state));

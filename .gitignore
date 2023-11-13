@@ -8,3 +8,4 @@ package-lock.json
 /dist
 .DS_Store
 /src/icon-components
+.idea
