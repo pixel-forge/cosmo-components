@@ -11,14 +11,19 @@
                   var(--cosmo-button-background__hover),
                   var(--cosmo-button-background__action)
   );
+  @include styles.disable-text-select;
 
   width: 100px;
   height: 40px;
+  padding: 0 10px;
 
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--cosmo-button-foreground);
+
+  border: 1px solid var(--cosmo-button-foreground);
+  border-radius: 10px;
 
   .cosmo-button__loader {
     height: 90%;
