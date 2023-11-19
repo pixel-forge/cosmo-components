@@ -3,6 +3,7 @@ import {Cosmo_SyncComponent} from '../../base/Cosmo_SyncComponent';
 import './Cosmo_Checkbox.scss';
 import {_className} from '@pixel-forge/cosmo-utils';
 import {CosmoIcons} from '@pixel-forge/cosmo-icons';
+import {checkbox_darkTheme, checkbox_lightTheme} from './themes';
 
 type Props = React.PropsWithChildren<{
 	//Core functionality
@@ -24,6 +25,13 @@ type State = {
 
 export class Cosmo_Checkbox
 	extends Cosmo_SyncComponent<Props, State> {
+
+	// ################## Class Properties ##################
+
+	static themes = {
+		light: checkbox_lightTheme,
+		dark: checkbox_darkTheme,
+	}
 
 	// ################## Class Life Cycle ##################
 
