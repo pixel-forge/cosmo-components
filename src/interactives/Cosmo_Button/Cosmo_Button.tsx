@@ -10,8 +10,8 @@ type Props = React.PropsWithChildren<{
 	className?: string;
 	onClick: (e: React.MouseEvent<HTMLDivElement>) => (void | Promise<void>);
 	variant: ButtonVariant;
-	loaderRenderer: React.ElementType;
-	disabled?:boolean;
+	loaderRenderer: () => React.ReactNode;
+	disabled?: boolean;
 }>;
 
 type State = {
@@ -47,7 +47,7 @@ export class Cosmo_Button
 		e.stopPropagation();
 		e.preventDefault();
 
-		if(this.props.disabled)
+		if (this.props.disabled)
 			return this.logVerbose('Button disabled, aborting');
 
 		if (this.state.actionInProgress)
@@ -88,7 +88,7 @@ export class Cosmo_Button
 	}
 
 	render() {
-		const className = _className('cosmo-button',this.props.className);
+		const className = _className('cosmo-button', this.props.className);
 		return <div
 			id={this.props.id}
 			className={className}
@@ -96,7 +96,8 @@ export class Cosmo_Button
 			data-variant={this.props.variant}
 			data-disabled={this.props.disabled}
 		>
-			{this.props.children}
+			{this.state.actionInProgress && this.props.loaderRenderer()}
+			{!this.state.actionInProgress && this.props.children}
 		</div>;
 	}
 }
