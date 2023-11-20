@@ -1,0 +1,73 @@
+@use '@pixel-forge/cosmo-styles' as styles;
+
+.cosmo-radio {
+  display: flex;
+  gap: 10px;
+
+  .cosmo-radio__option {
+    display: flex;
+    gap: 5px;
+
+    .cosmo-radio__input {
+      display: none;
+    }
+
+    .cosmo-radio__button {
+      background: white;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      border: 1px solid var(--cc__radio__foreground, black);
+    }
+
+    .cosmo-radio__label {
+      font-size: 15px;
+      color: var(--cc__radio__foreground, black);
+    }
+
+    &.selected {
+      .cosmo-radio__button {
+        background: radial-gradient(#0067FF 45%, white 50%);
+      }
+    }
+  }
+
+  &[data-variant='label'] {
+    gap: 0;
+
+    .cosmo-radio__option {
+      align-items: center;
+      padding: 5px 10px;
+      overflow: hidden;
+      border: 1px solid var(--cc__radio__foreground, black);
+
+      .cosmo-radio__button {
+        display: none;
+      }
+
+      &.selected {
+        background: #0067FF;
+
+        .cosmo-radio__label {
+          color: white;
+        }
+      }
+
+      &:first-child {
+        border-radius: 10px 0 0 10px;
+      }
+
+      &:last-child {
+        border-radius: 0 10px 10px 0;
+      }
+
+      &:not(:last-child) {
+        border-right: none;
+      }
+    }
+  }
+
+  &.disabled {
+
+  }
+}
