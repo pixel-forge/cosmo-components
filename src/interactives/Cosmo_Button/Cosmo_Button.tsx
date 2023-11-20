@@ -53,30 +53,24 @@ export class Cosmo_Button
 		if (this.state.actionInProgress)
 			return this.logVerboseBold('Action already in progress, aborting');
 
-		if (!this.state.isAsync)
-			return this.triggerSyncCallback(e);
+		this.logVerbose('Calling callback');
+		const returnValue = this.props.onClick(e);
+		const isPromise: boolean = !!(returnValue as Promise<void>)?.then;
+		if (!isPromise) {
+			this.logVerbose('Sync callback finished successfully');
+			return;
+		}
 
-		await this.triggerAsyncCallback(e);
-	};
-
-	private triggerSyncCallback = (e: React.MouseEvent<HTMLDivElement>) => {
-		this.logVerbose('Calling synchronous callback');
-		this.props.onClick(e);
-	};
-
-	private triggerAsyncCallback = async (e: React.MouseEvent<HTMLDivElement>) => {
-		this.logVerbose('Calling asynchronous callback');
 		this.setState(
 			{actionInProgress: true},
-			async () => {
-				try {
-					await this.props.onClick(e);
-					this.logVerbose('Action finished successfully');
-				} catch (e) {
-					this.logError('Action failed', e as Error);
-				} finally {
+			() => {
+				(returnValue as Promise<void>).then(() => {
+					this.logVerbose('Async callback finished successfully');
+				}).catch((e) => {
+					this.logError('Async callback returned error', e as Error);
+				}).finally(() => {
 					this.setState({actionInProgress: false});
-				}
+				});
 			}
 		);
 	};
@@ -88,7 +82,12 @@ export class Cosmo_Button
 	}
 
 	render() {
-		const className = _className('cosmo-button', this.props.className);
+		const className = _className(
+			'cosmo-button',
+			this.props.className,
+			this.state.actionInProgress && 'in-progress'
+		);
+
 		return <div
 			id={this.props.id}
 			className={className}
