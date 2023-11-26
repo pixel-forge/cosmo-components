@@ -1,26 +1,71 @@
+@use '@pixel-forge/cosmo-styles' as styles;
+$fallback-background: #FCFBF4;
+$fallback-foreground: #202124;
+$fallback-foreground-faded: #20212422;
+
+$background: var(--cc__input__background, $fallback-background);
+$foreground: var(--cc__input__foreground, $fallback-foreground);
+$foreground-faded: var(--cc__input__foreground-faded, $fallback-foreground-faded);
+
 .cosmo-input {
   width: 100%;
   max-width: 300px;
-  height: 30px;
+  height: 35px;
   padding: 0 8px;
-  border-radius: 10px;
-  border: 1px solid black;
-  box-sizing: border-box;
-  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-  //Placeholder
-  &::placeholder {
-    font-style: italic;
+  border-radius: 10px;
+  border: 1px solid $foreground;
+  box-sizing: border-box;
+  background: $background;
+  overflow: hidden;
+  cursor: text;
+
+  input {
+    height: 100%;
+    background: $background;
+    color: $foreground;
+    outline: none;
+    border: none;
+    flex-grow: 1;
+
+    //Placeholder
+    &::placeholder {
+      font-style: italic;
+      color: $foreground-faded;
+    }
+
+    //Number Input
+    &[type='number'] {
+      -moz-appearance: textfield;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
   }
 
-  //Number Input
-  &[type='number'] {
-    -moz-appearance: textfield;
+  .cosmo-input__clear {
+    @include styles.color-svg($background);
+    cursor: pointer;
+    height: 60%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: $foreground;
+    padding: 4px;
+    box-sizing: border-box;
+  }
 
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+  .cosmo-input__search {
+    @include styles.color-svg($foreground-faded);
+    cursor: pointer;
+    height: 60%;
+    aspect-ratio: 1/1;
+    padding: 2px;
+    box-sizing: border-box;
   }
 }
