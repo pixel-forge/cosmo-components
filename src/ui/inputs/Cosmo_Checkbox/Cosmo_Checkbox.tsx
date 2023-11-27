@@ -16,6 +16,7 @@ type Props = React.PropsWithChildren<{
 	id?: string;
 	className?: string;
 	buttonIcon?: React.JSX.Element;
+	variant: 'normal' | 'toggle' | string;
 }>;
 
 type State = {
@@ -28,10 +29,14 @@ export class Cosmo_Checkbox
 
 	// ################## Class Properties ##################
 
+	static defaultProps: Partial<Props> = {
+		variant: 'normal',
+	};
+
 	static themes = {
 		light: checkbox_lightTheme,
 		dark: checkbox_darkTheme,
-	}
+	};
 
 	// ################## Class Life Cycle ##################
 
@@ -81,6 +86,7 @@ export class Cosmo_Checkbox
 			onClick={this.onClick}
 			data-checked={this.state.checked}
 			data-disabled={this.props.disabled}
+			data-variant={this.props.variant}
 		>
 			{this.renderCheckButton()}
 			{this.renderContent()}
